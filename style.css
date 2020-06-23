@@ -1,0 +1,90 @@
+
+a:hover {
+  text-decoration: none;
+  color: red;
+}
+
+
+
+
+/* styles the main body, equal and relevant to all pages */
+.main-body {
+  background: #eeeeee;
+  border-bottom: 1px solid black;
+
+}
+
+.main-container {
+  margin: 0rem 7rem 2.5rem 7rem;
+  padding: 0rem 2.5rem;
+
+}
+
+header{
+  padding: 2rem 0;
+}
+
+header nav a:hover {
+  text-decoration: none;
+  color: white;
+}
+header nav a {
+  display: block;
+  color:#C1BEB9;
+  padding: 1.5rem 0rem;
+}
+
+header nav .active{
+  background: #C5110B;
+}
+
+header ul{
+  list-style-type: none;
+  border-top: 1px solid #C1BEB9;
+  border-bottom: 1px solid #C1BEB9;
+  padding:0;
+}
+
+header nav li{
+  background:#136b62;
+  align-items: center;
+}
+
+header img{
+  max-width:90%;
+  height: auto;
+
+}
+
+header nav li:hover{ /*not working for some reason */
+  background: black;
+}
+
+
+header nav li {
+  text-align: center;
+}
+
+header nav li:not(:last-child){
+  border-right: 1px solid #C1BEB9;
+}
+
+
+
+
+.box{
+  min-height:50rem;
+}
+
+.footer-body{
+  margin: 0;
+  padding: 0rem 2.5rem 1rem 2.5rem;
+  color:white;
+  background: #383838;
+
+}
+.footer-container{
+  margin: 0rem 4rem 0rem 4rem;
+  text-align: center;
+
+}
