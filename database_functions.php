@@ -9,6 +9,35 @@ $password = "";
 
 $feedback =  "";
 
+//handles button presses and data input from forms
+//if there was a form submission, add data from form into database
+if($_SERVER["REQUEST_METHOD"] === "POST"){
+  if(array_key_exists('clean_table', $_POST)){
+    $query = "DELETE FROM users";
+    runQuery($query);
+  }elseif(array_key_exists('gen_table', $_POST)){
+    generateDBTable();
+  }elseif(array_key_exists('delete_entry', $_POST)){
+    //if user selected a row to delete_entry
+    if(array_key_exists('entries', $_POST)){
+      $entries = $_POST['entries'];
+      deleteEntries($entries);
+    }
+    header('Location: homepage.php');
+    exit;
+  }
+  elseif(array_key_exists('username', $_POST)){
+    $input_username = $_POST["username"];
+    $input_password = $_POST["pword"];
+    insertEntry($input_username,$input_password);
+  }
+}
+
+
+
+
+
+
 
 function showDatabase(){
   global $host;
@@ -45,8 +74,18 @@ function showDatabase(){
   $con = null;
 }
 
+function generateDBTable(){
+  $sampleUsers = array("Joe","Sam","Cait","Jake","Raymond");
+  foreach($sampleUsers as $user){
+    $rand_pass = rand(10000000,99999999);
+    $insert_query = "INSERT INTO users(username, passwords) VALUES ('$user','$rand_pass')";
+    runQuery($insert_query);
+  }
+}
 
 
+
+//NEEDS TO BE UPDATED, SQL INJECTION DANGER
 function deleteEntries($entries){
   foreach($entries as $entry){
     $query = "DELETE FROM users WHERE username='${entry}';";
@@ -90,28 +129,41 @@ runQuery($insert_query);
 $query = "DELETE FROM users";
 runQuery($query);
 */
+
+//NEEDS TO BE UPDATED, SQL INJECTION DANGER
 function insertEntry($input_username, $input_password){
   global $feedback;
   $feedback = "insert entry";
   //if check input returns true, then a new entry can be made
-  if(checkInput($input_username, $input_password)){
+  if(validateInput($input_username, $input_password)){
     $insert_query = "INSERT INTO users VALUES ('$input_username','$input_password')";
     runQuery($insert_query);
     //sends user back to same page (this cleans _POST variable)
     header('Location: submited.php');
     exit;
   }
-
 }
-function checkInput($input_username, $input_password){
-  global $feedback;
 
+//Returns true if input is good to be stored in db
+//needs to add sql sanitisation, string length range
+function validateInput($username, $password){
+  global $feedback;
+  $input_username = filter_var($username, FILTER_SANITIZE_STRING);
+  $input_password = filter_var($password, FILTER_SANITIZE_STRING);
+  $len_username = strlen($input_username);
+  $len_password = strlen($input_password);
   #checking if username and password contain spaces
   if(checkSpaces($input_username)){
     $feedback = "Your username cannot have spaces";
     return false;
   }elseif(checkSpaces($input_password)){
     $feedback = "your password cannot have spaces";
+    return false;
+  }elseif($len_username < 2 || $len_username > 30){
+    $feedback = "Username length must be between 2 and 30 characters";
+    return false;
+  }elseif($len_password < 7 || $len_username > 30){
+    $feedback = "password length must be between 7 and 30 characters";
     return false;
   }else{
     //input username must be compared with db
@@ -134,12 +186,10 @@ function checkSpaces($input){
 }
 
 function checkUsername($input){
-
   global $host;
   global $db_name;
   global $username;
   global $password;
-  //inserting data into database
   try {
     // 2. connect to database
     $con = new PDO("mysql:host={$host};dbname={$db_name}", $username, $password);
@@ -149,7 +199,6 @@ function checkUsername($input){
     $query->execute([$input]);
     //getting result from query
     $result = $query->fetch();
-
     if($result){
       //username already exists
       return true;
@@ -165,37 +214,5 @@ function checkUsername($input){
 }
 
 
-
-//if there was a form submission, add data from form into database
-//handles button presses and data input from forms
-if($_SERVER["REQUEST_METHOD"] === "POST"){
-  if(array_key_exists('clean_table', $_POST)){
-    $query = "DELETE FROM users";
-    runQuery($query);
-  }elseif(array_key_exists('gen_table', $_POST)){
-    $sampleUsers = array("Joe","Sam","Cait","Jake","Raymond");
-    foreach($sampleUsers as $user){
-      $rand_pass = rand(10000000,99999999);
-      $insert_query = "INSERT INTO users(username, passwords) VALUES ('$user','$rand_pass')";
-      runQuery($insert_query);
-    }
-
-  }elseif(array_key_exists('delete_entry', $_POST)){
-    //if user selected a row to delete_entry
-    if(array_key_exists('entries', $_POST)){
-      $entries = $_POST['entries'];
-      deleteEntries($entries);
-    }
-    header('Location: homepage.php');
-    exit;
-  }
-  elseif(array_key_exists('username', $_POST)){
-    $input_username = $_POST["username"];
-    $input_password = $_POST["pword"];
-    insertEntry($input_username,$input_password);
-
-  }
-
-}
 
 ?>
