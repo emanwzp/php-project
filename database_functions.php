@@ -7,6 +7,8 @@ $username = "root";
 $password = "";
 
 
+$feedback =  "";
+
 
 function showDatabase(){
   global $host;
@@ -72,6 +74,8 @@ function runQuery($query){
   $con = null;
 }
 
+
+
 /*
 //inserting data into database
 $sampleUsers = array("Joe","Sam","Cait","Jake","Raymond");
@@ -86,7 +90,79 @@ runQuery($insert_query);
 $query = "DELETE FROM users";
 runQuery($query);
 */
+function insertEntry($input_username, $input_password){
+  global $feedback;
+  $feedback = "insert entry";
+  //if check input returns true, then a new entry can be made
+  if(checkInput($input_username, $input_password)){
+    $insert_query = "INSERT INTO users VALUES ('$input_username','$input_password')";
+    runQuery($insert_query);
+    //sends user back to same page (this cleans _POST variable)
+    header('Location: submited.php');
+    exit;
+  }
 
+}
+function checkInput($input_username, $input_password){
+  global $feedback;
+
+  #checking if username and password contain spaces
+  if(checkSpaces($input_username)){
+    $feedback = "Your username cannot have spaces";
+    return false;
+  }elseif(checkSpaces($input_password)){
+    $feedback = "your password cannot have spaces";
+    return false;
+  }else{
+    //input username must be compared with db
+    if(checkUsername($input_username)){
+      $feedback = "Sorry but this username already exists, try a different one";
+      return false;
+    }else{
+      return true;
+    }
+  }
+}
+
+function checkSpaces($input){
+  $pattern = " ";
+  if(strpos($input, $pattern) === false){
+    return false;
+  }else{
+    return true;
+  }
+}
+
+function checkUsername($input){
+
+  global $host;
+  global $db_name;
+  global $username;
+  global $password;
+  //inserting data into database
+  try {
+    // 2. connect to database
+    $con = new PDO("mysql:host={$host};dbname={$db_name}", $username, $password);
+    // set the PDO error mode to exception
+    $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $query = $con->prepare("SELECT * from users WHERE username=?");
+    $query->execute([$input]);
+    //getting result from query
+    $result = $query->fetch();
+
+    if($result){
+      //username already exists
+      return true;
+    }else{
+      //username does not exist
+      return false;
+    }
+  }
+  catch(PDOException $e) {
+    echo $sql . "<br>" . $e->getMessage();
+  }
+  $con = null;
+}
 
 
 
@@ -110,18 +186,16 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
       $entries = $_POST['entries'];
       deleteEntries($entries);
     }
+    header('Location: homepage.php');
+    exit;
   }
   elseif(array_key_exists('username', $_POST)){
     $input_username = $_POST["username"];
     $input_password = $_POST["pword"];
-    $insert_query = "INSERT INTO users VALUES ('$input_username','$input_password')";
-    runQuery($insert_query);
-    //sends user back to same page (this cleans _POST variable)
-    header('Location: submited.php');
-    exit;
+    insertEntry($input_username,$input_password);
+
   }
-  header('Location: homepage.php');
-  exit;
+
 }
 
 ?>
