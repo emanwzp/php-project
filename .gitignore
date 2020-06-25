@@ -1,0 +1,17 @@
+# Ideas on what to ignore:
+#Compiled source code
+#Packages and compressed files
+#Logs and databases
+#Operating system generated files
+#User-uploaded assets(images, PDFs, videos)
+#For .gitignore Templates go to : github.com/github/gitignore
+
+*.zip
+*.gz
+log/*.log
+log/*.log.[0-9]
+assets/photoshop/
+assets/videos/
+#except this particular type
+
+!assets/videos/tour_*.mp4

@@ -49,10 +49,9 @@
               <input type="submit" name="delete_entry" value="Delete Database Entries">
             </div>
           </div>
-
         </form>
 
-        <p>Now with git</p>
+        <p>Now with git edited</p>
 
       </div>
 
