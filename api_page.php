@@ -11,7 +11,7 @@
 <body>
   <div class="container">
     <div class="main-body">
-      <div class="main-container box">
+      <div class="main-container">
 
         <?php include 'navigation_panel.php';?>
 
@@ -24,8 +24,8 @@
           <!-- value= <?php if(array_key_exists('advice', $_GET)){echo $_GET["advice"];}?> -->
           <input type="text" id="advice" name="advice_input" ><br>
           <p> </p>
-          <input type="submit" name='advice' value="Ask for advice">
-          <input type="submit" name="random_advice" value="Get random advice">
+          <input type="submit" name='advice' value="Ask for Advice">
+          <input type="submit" name="random_advice" value="Get Random Advice">
 
         </form>
 

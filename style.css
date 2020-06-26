@@ -5,6 +5,10 @@ a:hover {
 }
 
 
+h1, h2, h3{
+  color:#136b62;
+}
+
 
 
 /* styles the main body, equal and relevant to all pages */
@@ -17,6 +21,7 @@ a:hover {
 .main-container {
   margin: 0rem 7rem 2.5rem 7rem;
   padding: 0rem 2.5rem;
+  min-height: 80vh;
 
 }
 
@@ -70,11 +75,10 @@ header nav li:not(:last-child){
 }
 
 
-
-
-.box{
-  min-height:50rem;
+form{
+  margin:2rem 0;
 }
+
 
 .footer-body{
   margin: 0;
@@ -91,4 +95,20 @@ header nav li:not(:last-child){
 .feedback{
   padding:2rem 0;
   color: red;
+}
+
+input[type=submit]{
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  border: 2px solid #383838;
+  border-radius: 4px;
+  text-decoration: none;
+  color:#383838;
+  background: #eeeeee;
+}
+input[type=submit]:hover{
+  color: white;
+  background: #136b62;
+  border-color: #383838;
+  transition: all 0.4s ease 0s;
 }

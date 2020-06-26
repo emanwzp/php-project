@@ -19,14 +19,23 @@
 
         <?php include 'database_functions.php';?>
 
-        <div class = row>
-          <div class ="col-md-12">
-          <h1 >Testing database data insertion from user input</h1>
+        <div class ="row">
 
+          <h1>Testing database data insertion from user input</h1>
+        </div>
+
+        <div class="row">
+          <?php function getPreviousInput(){
+            if($_SERVER["REQUEST_METHOD"] === "POST" && array_key_exists('username', $_POST)){
+              echo $_POST["username"];
+            }else{
+              return "";
+            }
+          }?>
           <form method="POST" class="col-md-6">
             <label for="username">Username:</label><br>
             <!--value should be gotten from _POST variable if user had input before-->
-            <input type="text" id="username" name="username"  value="<?php if($_SERVER["REQUEST_METHOD"] === "POST"){echo $_POST["username"];}?>" required><br>
+            <input type="text" id="username" name="username"  value="<?php getPreviousInput() ?>" required><br>
             <label for="pword">Password:</label><br>
             <input type="password" id="pword" name="pword" required><br><br>
             <input type="submit" value="Create User"><br>
@@ -35,21 +44,25 @@
         </div>
 
 
-        </div>
-
 
 
 
         <form method="POST" class="row" action="homepage.php">
           <div class="col-md-8">
-            <h1 class='col-md-12'>Testing Database Access in PHP</h1>
-            <h3 class="col-md-5">Username</h3>
-            <h3 class="col-md-5">Username</h3>
-            <?php showDatabase();?>
-            <div class="col-md-12">
-              <input type="submit" name="clean_table" value="Clean table">
-              <input type="submit" name="gen_table" value="Generate table">
-              <input type="submit" name="delete_entry" value="Delete Database Entries">
+            <div class="row">
+              <h1>Testing Database Access in PHP</h1>
+            </div>
+            <div class="row">
+              <h3 class="col-md-5">Username</h3>
+              <h3 class="col-md-5">Password</h3>
+            </div>
+            <div class="row">
+              <?php showDatabase();?>
+            </div>
+            <div class="row">
+              <input type="submit" class="col" name="clean_table" value="Clean Table">
+              <input type="submit" class="col" name="gen_table" value="Generate Table">
+              <input type="submit" class="col" name="delete_entry" value="Delete Database Entries">
             </div>
           </div>
         </form>
