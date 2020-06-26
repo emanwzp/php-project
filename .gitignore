@@ -10,8 +10,7 @@
 *.gz
 log/*.log
 log/*.log.[0-9]
-assets/photoshop/
-assets/videos/
-#except this particular type
 
+assets/*
+#except this particular type
 !assets/videos/tour_*.mp4

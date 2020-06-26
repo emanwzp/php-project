@@ -4,7 +4,7 @@ echo '
 <header class="row">
   <div class="col-sm-2 col-md-1">
 
-  <img src="favicon.ico" alt="Logo" ></img>
+  <img src="Assets\favicon.ico" alt="Logo" ></img>
 
   </div>
   <div class="col-sm-10 col-md-11">
