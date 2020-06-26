@@ -61,8 +61,8 @@ header img{
 
 }
 
-header nav li:hover{ /*not working for some reason */
-  background: black;
+header nav li:hover{
+  background: #383838;
 }
 
 
@@ -111,4 +111,16 @@ input[type=submit]:hover{
   background: #136b62;
   border-color: #383838;
   transition: all 0.4s ease 0s;
+}
+
+#canvasContainer{
+
+  margin: 0;
+  display: flex;
+  /* This centers our sketch horizontally. */
+  justify-content: center;
+
+  /* This centers our sketch vertically. */
+  align-items: center;
+
 }
