@@ -13,7 +13,7 @@
     <div class="main-body">
       <div class="main-container">
 
-        <?php include 'navigation_panel.php';?>
+        <?php include 'page_components/navigation_panel.php';?>
 
         <h1>Searching for advice with an API</h1>
         <p></p>
@@ -98,5 +98,5 @@
   </div>
 
 
-  <?php include 'footer.php';?>
+  <?php include 'page_components/footer.php';?>
 </body>

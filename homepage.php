@@ -15,9 +15,9 @@
 
 
 
-        <?php include 'navigation_panel.php'; ?>
+        <?php include 'page_components/navigation_panel.php'; ?>
 
-        <?php include 'database_functions.php';?>
+        <?php include 'page_components/database_functions.php';?>
 
         <div class ="row">
 
@@ -74,7 +74,7 @@
 
   </div>
 
-  <?php include 'footer.php'; ?>
+  <?php include 'page_components/footer.php'; ?>
 
 
 

@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="style.css"/>
   <script language="javascript" type="text/javascript" src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.min.js"></script>
   <!--<script language="javascript" src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/addons/p5.sound.min.js"></script> -->
-  <script language="javascript" src="particle.js"></script>
+  <script language="javascript" src="atractors/particle.js"></script>
 
 </head>
 
@@ -16,14 +16,14 @@
   <div class="container">
     <div class="main-body">
       <div class="main-container">
-          <?php include 'navigation_panel.php'; ?>
+          <?php include 'page_components/navigation_panel.php'; ?>
           <!-- find way to align center -->
           <h1>Using javascript with p5.js library</h1>
           <h2>Atractors and Repulsors</h2>
           <p>Click mouse to create an atractor on mouse location, or repulsor
             instead, if option is checked</p>
           <div id="canvasContainer" class="row">
-            <script language="javascript" type="text/javascript" src="sketch.js"></script>
+            <script language="javascript" type="text/javascript" src="atractors/atractors_canvas.js"></script>
           </div>
           <div class="row">
           <div id="trailSlider" class="col-md-3">
@@ -46,7 +46,7 @@
   </div>
 </div>
 
-  <?php include 'footer.php'; ?>
+  <?php include 'page_components/footer.php'; ?>
 
 
 

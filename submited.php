@@ -16,7 +16,7 @@
 
 
 
-        <?php include 'navigation_panel.php'; ?>
+        <?php include 'page_components/navigation_panel.php'; ?>
 
         <h1>User Created</h1>
         <p>Thank you for your submission</p>
@@ -27,7 +27,7 @@
 
     </div>
   </div>
-  <?php include 'footer.php';?>
+  <?php include 'page_components/footer.php';?>
 
 
 </body>
