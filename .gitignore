@@ -11,6 +11,8 @@
 log/*.log
 log/*.log.[0-9]
 
+*.ico
+
 assets/*
 #except this particular type
 !assets/videos/tour_*.mp4
