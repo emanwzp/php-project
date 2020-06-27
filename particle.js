@@ -13,7 +13,7 @@ function Particle(x, y) {
   }
 
   this.show = function() {
-    stroke(255, 15);
+    stroke(255, 20);
     strokeWeight(4);
     point(this.pos);
   }

@@ -63,6 +63,7 @@ header img{
 
 header nav li:hover{
   background: #383838;
+  transition: all 0.4s ease 0s;
 }
 
 
