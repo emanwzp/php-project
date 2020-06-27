@@ -25,34 +25,9 @@ h1, h2, h3{
 
 }
 
+
 header{
   padding: 2rem 0;
-}
-
-header nav a:hover {
-  text-decoration: none;
-  color: white;
-}
-header nav a {
-  display: block;
-  color:#C1BEB9;
-  padding: 1.5rem 0rem;
-}
-
-header nav .active{
-  background: #C5110B;
-}
-
-header ul{
-  list-style-type: none;
-  border-top: 1px solid #C1BEB9;
-  border-bottom: 1px solid #C1BEB9;
-  padding:0;
-}
-
-header nav li{
-  background:#136b62;
-  align-items: center;
 }
 
 header img{
@@ -61,36 +36,48 @@ header img{
 
 }
 
-header nav li:hover{
+
+header nav a {
+  color:#C1BEB9;
+  padding: 1.5rem 0rem;
+  background:#136b62;
+  align-items: center;
+  text-align: center;
+}
+
+header nav a:hover, nav .dropbtn:hover{
+  text-decoration: none;
+  color: white;
   background: #383838;
   transition: all 0.4s ease 0s;
 }
 
 
-header nav li {
-  text-align: center;
+header nav a:not(:last-child){
+  border-right: 1px solid #C1BEB9;
 }
 
-header nav li:not(:last-child){
-  border-right: 1px solid #C1BEB9;
+header nav .dropbtn{
+  color:#C1BEB9;
+  padding: 1.5rem 0rem;
+  background:#136b62;
+  align-items: center;
+  text-align: center;
+  outline: none;
+  border: none;
+}
+
+.dropdown-content {
+  display: none;
+}
+
+nav .dropbtn:hover nav .dropdown-content {
+  display: block;
 }
 
 
 form{
   margin:2rem 0;
-}
-
-
-.footer-body{
-  margin: 0;
-  padding: 0rem 2.5rem 1rem 2.5rem;
-  color:white;
-  background: #383838;
-
-}
-.footer-container{
-  margin: 0rem 4rem 0rem 4rem;
-  text-align: center;
 }
 
 .feedback{
@@ -113,6 +100,22 @@ input[type=submit]:hover{
   border-color: #383838;
   transition: all 0.4s ease 0s;
 }
+
+
+
+.footer-body{
+  margin: 0;
+  padding: 0rem 2.5rem 1rem 2.5rem;
+  color:white;
+  background: #383838;
+
+}
+.footer-container{
+  margin: 0rem 4rem 0rem 4rem;
+  text-align: center;
+}
+
+
 
 #canvasContainer{
 
