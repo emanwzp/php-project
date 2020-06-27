@@ -22,6 +22,13 @@
           <div id="canvasContainer" class="row">
             <script language="javascript" type="text/javascript" src="sketch.js"></script>
           </div>
+          <div class="row">
+          <div id="trailSlider" class="col-md-3">
+            <p>Trail Slider</p>
+          </div>
+          <div id="gSlider" class="col-md-3">
+            <p>Gravity Slider</p>
+          </div>
 
 
 
