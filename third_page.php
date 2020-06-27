@@ -19,6 +19,9 @@
           <?php include 'navigation_panel.php'; ?>
           <!-- find way to align center -->
           <h1>Using javascript with p5.js library</h1>
+          <h2>Atractors and Repulsors</h2>
+          <p>Click mouse to create an atractor on mouse location, or repulsor
+            instead, if option is checked</p>
           <div id="canvasContainer" class="row">
             <script language="javascript" type="text/javascript" src="sketch.js"></script>
           </div>
@@ -29,6 +32,10 @@
           <div id="gSlider" class="col-md-3">
             <p>Gravity Slider</p>
           </div>
+          <div id="gSlider" class="col-md-3">
+            <p>Repulsor</p>
+            <input type="checkbox" id="repulsor">
+          </div>
 
 
 
@@ -37,6 +44,7 @@
     </div>
 
   </div>
+</div>
 
   <?php include 'footer.php'; ?>
 
