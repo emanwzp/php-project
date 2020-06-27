@@ -118,7 +118,6 @@ input[type=submit]:hover{
 
 
 #canvasContainer{
-
   margin: 0;
   display: flex;
   /* This centers our sketch horizontally. */
