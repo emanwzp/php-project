@@ -1,13 +1,16 @@
 var atractor;
-var particle;
+var particles = [];
 
 
 function setup(){
   var myCanvas = createCanvas(800,600);
   myCanvas.parent("canvasContainer");
-
+  for(var i = 0; i < 30; i++){
+    particle = new Particle(width/2,height/3);
+    particles.push(particle);
+  }
   atractor = createVector(width/2,height/2);
-  particle = new Particle(width/2,height/3);
+
   background(51);
 }
 
@@ -18,9 +21,13 @@ function draw(){
 
   point(atractor);
 
-  particle.attracted(atractor);
-  particle.update();
-  particle.show();
+  for(var i = 0; i < particles.length; i++){
+    var particle = particles[i];
+    particle.attracted(atractor);
+    particle.update();
+    particle.show();
+  }
+
 
 
 }
