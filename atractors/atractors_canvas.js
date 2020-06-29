@@ -2,11 +2,13 @@ var atractors = [];
 var repulsors = [];
 var particles = [];
 
-var trailLen = 50;
+var trailLen = 10;
 var trailSlider;
 
-var g = 6.7;
+var g = 50;
 var gSlider;
+
+
 
 
 
@@ -17,12 +19,12 @@ function setup(){
 
   textSize(20);
   //create particles
-  for(var i = 0; i < 50; i++){
+  for(var i = 0; i < 30; i++){
     particle = new Particle(random(width),random(height));
     particles.push(particle);
   }
   //create atractors
-  for(var i = 0; i < 1; i++){
+  for(var i = 0; i < 0; i++){
     var v = createVector(random(300,width-300),random(300,height-300));
     atractors.push(v);
   }
@@ -31,8 +33,10 @@ function setup(){
   trailSlider = createSlider(0,100,10,1);
   trailSlider.parent("trailSlider");
 
-  gSlider = createSlider(1,50,6,1);
+  gSlider = createSlider(1,50,25,1);
   gSlider.parent("gSlider");
+
+
 
 }
 
@@ -85,6 +89,7 @@ function draw(){
 
   trailLen = trailSlider.value();
   g = gSlider.value();
+
 
 
 }

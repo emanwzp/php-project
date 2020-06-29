@@ -2,15 +2,15 @@ function Particle(x, y) {
   this.pos = createVector(x, y);
 
   this.trail = [];
-  //this.vel = p5.Vector.random2D();
-  this.vel = createVector();
+  this.vel = p5.Vector.random2D();
   this.acc = createVector();
 
 
   this.update = function() {
     this.vel.add(this.acc);
     //prevents velocity from going out of control
-    //this.vel.limit(20);
+    //this.vel.limit(15);
+
     this.pos.add(this.vel);
     this.acc.mult(0);
 
@@ -42,14 +42,16 @@ function Particle(x, y) {
   }
 
   this.attracted = function(target,type) {
-    var force = p5.Vector.sub(target, this.pos);
-    var dSqr = force.magSq();
-    dSqr = constrain(dSqr,2,170);
-    var magnitude = g / dSqr;
-    force.setMag(magnitude);
+    var dir = p5.Vector.sub(target, this.pos);
+    //force = force.magSq();
+    force = dir.mag();
+    force *= 2;
+    force = constrain(force,15,400);
+    var magnitude = g / force;
+    dir.setMag(magnitude);
     //multiplying by 1 or -1,-1 reverts the force, repelling instead of attracting
-    force.mult(type);
-    this.acc.add(force);
+    dir.mult(type);
+    this.acc.add(dir );
 
   }
 }
