@@ -13,7 +13,7 @@ echo '
           <a class = "col-sm-3 col-md-3" href="homepage.php" >Homepage</a>
           <a class = "col-sm-3 col-md-3" href="api_page.php">Advice With API</a>
           <a class = "col-sm-3 col-md-3" href="third_page.php">Atractors Simulation</a>
-          <a class = "col-sm-3 col-md-3" href="">Empty</a>
+          <a class = "col-sm-3 col-md-3" href="map_page.php">Scratch Map</a>
         </div>
 
       </div>

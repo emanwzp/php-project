@@ -9,7 +9,7 @@ h1, h2, h3{
   color:#136b62;
 }
 
-
+#mapid { height: 580px; }
 
 /* styles the main body, equal and relevant to all pages */
 .main-body {
