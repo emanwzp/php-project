@@ -109,8 +109,7 @@ function style(feature) {
     return{
       fillColor: "blue",
       weight: 1,
-
-      color: 'white',
+      color: 'black',
       dashArray: '',
       fillOpacity: 0.5
     }
@@ -118,7 +117,6 @@ function style(feature) {
     return {
       fillColor: "white",
       weight: 1,
-
       color: 'grey',
       dashArray: '',
       fillOpacity: 0.5,
