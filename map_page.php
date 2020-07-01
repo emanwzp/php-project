@@ -32,11 +32,23 @@
         <?php include 'page_components/navigation_panel.php'; ?>
 
 
-        <h1>Scratch Map Page</h1>
+        <h1>Select Countries you have visited</h1>
 
         <div id="mapid" class="row">
           <script language="javascript" src="map/map_canvas.js"></script>
         </div>
+
+        <div class="row">
+          <p>Click on a country on the map, to add or remove it, or use the text field below</p>
+          <input type="text" placeholder="Country Name" id="countryInput">
+          <span id="feedback"></span>
+        </div>
+        <div class="row">
+          <button type="button" onclick="addCountry();">Add Country</button>
+          <button type="button" onclick="removeCountry();">Remove Country</button>
+        </div class="row">
+
+
 
 
 
