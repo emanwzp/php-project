@@ -21,6 +21,7 @@
 
 
 
+
 </head>
 
 <body>
@@ -28,8 +29,18 @@
   <div class="container ">
     <div class="main-body">
       <div class="main-container box">
+        <?php include 'map/database_access.php'; ?>
+
 
         <?php include 'page_components/navigation_panel.php'; ?>
+        <script>
+          var countries = <?= json_encode(getCountries()); ?>;
+          // var visited_countries = countries[0];
+          countries = countries[0];
+          //var wishlist_countries = countries[1];
+          //console.log(visited_countries);
+          //console.log(wishlist_countries);
+        </script>
 
 
         <h1>Select Countries you have visited</h1>
@@ -46,6 +57,8 @@
         <div class="row">
           <button type="button" onclick="addCountry();">Add Country</button>
           <button type="button" onclick="removeCountry();">Remove Country</button>
+          <button type="button" onclick="">Save Changes in DB</button>
+
         </div class="row">
 
 

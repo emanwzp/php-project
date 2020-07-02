@@ -17,7 +17,8 @@ myMap.setMaxBounds(bounds);
 myMap.maxBoundsViscosity = 1;
 
 
-var countries = ["Switzerland","Portugal","France"];
+
+//var countries = ["Switzerland","Portugal","France"];
 
 //Stores country clicked if it exists in the array, otherwise it removes it from
 //the array
