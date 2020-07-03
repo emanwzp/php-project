@@ -4,6 +4,20 @@ a:hover {
   color: red;
 }
 
+/* Make font sizes adjust to screen sizes */
+h1{
+  font-size: 2vw;
+}
+h2{
+  font-size: 1.7vw;
+}
+h3{
+  font-size: 1.3vw;
+}
+a{
+  font-size: 0.7vw;
+}
+
 
 h1, h2, h3{
   color:#136b62;

@@ -53,11 +53,11 @@
               <h1>Testing Database Access in PHP</h1>
             </div>
             <div class="row">
-              <h3 class="col-md-5">Username</h3>
-              <h3 class="col-md-5">Password</h3>
+              <h3 class="col-sm-5 col-md-5">Username</h3>
+              <h3 class="col-sm-5 col-md-5">Password</h3>
             </div>
             <div class="row">
-              <?php showDatabase();?>
+              <?php showTable();?>
             </div>
             <div class="row">
               <input type="submit" class="col" name="clean_table" value="Clean Table">

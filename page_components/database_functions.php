@@ -13,10 +13,9 @@ $feedback =  "";
 //if there was a form submission, add data from form into database
 if($_SERVER["REQUEST_METHOD"] === "POST"){
   if(array_key_exists('clean_table', $_POST)){
-    $query = "DELETE FROM users";
-    runQuery($query);
+    cleanTable();
   }elseif(array_key_exists('gen_table', $_POST)){
-    generateDBTable();
+    generateTable();
   }elseif(array_key_exists('delete_entry', $_POST)){
     //if user selected a row to delete_entry
     if(array_key_exists('entries', $_POST)){
@@ -33,23 +32,32 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
   }
 }
 
-
-
-
-
-
-
-function showDatabase(){
+//Returns a PDO connection to the database
+function getConnection(){
   global $host;
   global $db_name;
   global $username;
   global $password;
+  $con;
   try {
     // 2. connect to database
     $con = new PDO("mysql:host={$host};dbname={$db_name}", $username, $password);
     // set the PDO error mode to exception
     $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+  }
+  catch(PDOException $e) {
+    echo $sql . "<br>" . $e->getMessage();
+  }
+  return $con;
+}
+
+
+//Returns html elements for each table entry (username, pw, and respective checkbox)
+function showTable(){
+  try {
+    // 2. connect to database
+    $con = getConnection();
     //preparing and running query
     $query = "SELECT * FROM users ORDER BY username";
     $stmt = $con->prepare( $query );
@@ -60,50 +68,62 @@ function showDatabase(){
       $username = $row['username'];
       $password = $row['passwords'];
       echo "
-      <p class='col-md-5'>${username} </p>
-      <p class='col-md-5'>${password} </p>
-      <input type='checkbox'  class='col-md-2'  name='entries[]' value='${username}'><br/>
+      <p class='col-sm-5 col-md-5'>${username} </p>
+      <p class='col-sm-5 col-md-5'>${password} </p>
+      <input type='checkbox'  class='col-sm-2 col-md-2'  name='entries[]' value='${username}'><br/>
       ";
 
     }
   }
-
   catch(PDOException $e) {
     echo $sql . "<br>" . $e->getMessage();
   }
   $con = null;
 }
 
-function generateDBTable(){
+
+//Generates an entry on the users table, for each user in the $sampleUsers array
+//with a random generated pw (mostly for demo purposes)
+function generateTable(){
   $sampleUsers = array("Joe","Sam","Cait","Jake","Raymond");
   foreach($sampleUsers as $user){
     $rand_pass = rand(10000000,99999999);
-    $insert_query = "INSERT INTO users(username, passwords) VALUES ('$user','$rand_pass')";
-    runQuery($insert_query);
+    $con = getConnection();
+    $insert_query = "INSERT INTO users(username, passwords) VALUES (? , ?)";
+    $sth = $con->prepare($insert_query);
+    $sth->bindParam(1, $user);
+    $sth->bindParam(2, $rand_pass);
+    $sth->execute();
   }
+}
+
+//Deletes all entries from a table
+function cleanTable(){
+  $query = "DELETE FROM users";
+  runQuery($query);
 }
 
 
 
-//NEEDS TO BE UPDATED, SQL INJECTION DANGER
+//For each entry selected on the checkboxes, it deletes the entry with the
+//same username
 function deleteEntries($entries){
   foreach($entries as $entry){
-    $query = "DELETE FROM users WHERE username='${entry}';";
-    runQuery($query);
+    $entry = filter_var($entry, FILTER_SANITIZE_STRING);
+    $con = getConnection();
+    $query = "DELETE FROM users WHERE username=?;";
+    $sth = $con->prepare($query);
+    $sth->bindParam(1,$entry);
+    $sth->execute();
   }
 }
 
+
+//Runs generic query(passed as a function parameter) that has no parameters
 function runQuery($query){
-  global $host;
-  global $db_name;
-  global $username;
-  global $password;
-  //inserting data into database
   try {
     // 2. connect to database
-    $con = new PDO("mysql:host={$host};dbname={$db_name}", $username, $password);
-    // set the PDO error mode to exception
-    $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $con = getConnection();
     $con->exec($query);
     //echo "<p>Query ran successfully </p>";
   }
@@ -115,41 +135,35 @@ function runQuery($query){
 
 
 
-/*
-//inserting data into database
-$sampleUsers = array("Joe","Sam","Cait","Jake","Raymond");
-foreach($sampleUsers as $user){
-$rand_pass = rand(10000000,99999999);
-$insert_query = "INSERT INTO users(username, passwords) VALUES ('$user','$rand_pass')";
-runQuery($insert_query);
-}
 
 
-//Deleting data from database
-$query = "DELETE FROM users";
-runQuery($query);
-*/
-
-//NEEDS TO BE UPDATED, SQL INJECTION DANGER
+//After validating input, it adds an entry to the users table
 function insertEntry($input_username, $input_password){
   global $feedback;
   $feedback = "insert entry";
+  $input_username = filter_var($input_username, FILTER_SANITIZE_STRING);
+  $input_password = filter_var($input_password, FILTER_SANITIZE_STRING);
+
   //if check input returns true, then a new entry can be made
   if(validateInput($input_username, $input_password)){
-    $insert_query = "INSERT INTO users VALUES ('$input_username','$input_password')";
-    runQuery($insert_query);
-    //sends user back to same page (this cleans _POST variable)
+    $con = getConnection();
+    $insert_query = "INSERT INTO users VALUES (?, ?)";
+    $sth = $con->prepare($insert_query);
+    $sth->bindParam(1, $input_username);
+    $sth->bindParam(2, $input_password);
+    $sth->execute();
+    /*sends user to another page
+    if the goal is to remain on the same page, it is still good to use
+    header + exit anyway since this will clean the POST variable*/
     header('Location: submited.php');
     exit;
   }
 }
 
-//Returns true if input is good to be stored in db
-//needs to add sql sanitisation, string length range
-function validateInput($username, $password){
+//Returns true if input is good to be stored in db, or false otherwise
+//it checks for spaces, string length and if username already exists
+function validateInput($input_username, $input_password){
   global $feedback;
-  $input_username = filter_var($username, FILTER_SANITIZE_STRING);
-  $input_password = filter_var($password, FILTER_SANITIZE_STRING);
   $len_username = strlen($input_username);
   $len_password = strlen($input_password);
   #checking if username and password contain spaces
@@ -176,6 +190,7 @@ function validateInput($username, $password){
   }
 }
 
+//checks if string passed as parameter contains spaces
 function checkSpaces($input){
   $pattern = " ";
   if(strpos($input, $pattern) === false){
@@ -185,16 +200,10 @@ function checkSpaces($input){
   }
 }
 
+//checks if username already exists in the database
 function checkUsername($input){
-  global $host;
-  global $db_name;
-  global $username;
-  global $password;
   try {
-    // 2. connect to database
-    $con = new PDO("mysql:host={$host};dbname={$db_name}", $username, $password);
-    // set the PDO error mode to exception
-    $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $con = getConnection();
     $query = $con->prepare("SELECT * from users WHERE username=?");
     $query->execute([$input]);
     //getting result from query
@@ -212,9 +221,5 @@ function checkUsername($input){
   }
   $con = null;
 }
-
-
-
-
 
 ?>
