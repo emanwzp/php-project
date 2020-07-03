@@ -9,7 +9,7 @@ function Particle(x, y) {
   this.update = function() {
     this.vel.add(this.acc);
     //prevents velocity from going out of control
-    //this.vel.limit(15);
+    this.vel.mult(0.9999);
 
     this.pos.add(this.vel);
     this.acc.mult(0);
@@ -43,15 +43,15 @@ function Particle(x, y) {
 
   this.attracted = function(target,type) {
     var dir = p5.Vector.sub(target, this.pos);
-    //force = force.magSq();
     force = dir.mag();
-    force *= 2;
-    force = constrain(force,15,400);
-    var magnitude = g / force;
+    force = constrain(force,8 ,150);
+    force = force * force;
+
+    var magnitude = 5 * (g / force);
     dir.setMag(magnitude);
     //multiplying by 1 or -1,-1 reverts the force, repelling instead of attracting
     dir.mult(type);
-    this.acc.add(dir );
+    this.acc.add(dir);
 
   }
 }
