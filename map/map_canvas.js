@@ -191,6 +191,8 @@ function highlightFeature(e) {
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         layer.bringToFront();
     }
+    //updates legend
+    info.update(layer.feature.properties);
 }
 
 
@@ -198,6 +200,9 @@ var borders;
 
 function resetHighlight(e) {
     borders.resetStyle(e.target);
+
+    //updates
+    info.update();
 }
 
 
@@ -218,3 +223,46 @@ borders = L.geoJson(borderData, {
     style: style,
     onEachFeature: onEachFeature
 }).addTo(myMap);
+
+
+//Legend for map
+var info = L.control();
+
+info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+
+// method that we will use to update the control based on feature properties passed
+info.update = function (props) {
+  // var message = "<i> Click to add country as visited </i>";
+  // var wishlist = document.getElementById("wishlist");
+  // if(wishlist){
+  //   if (wishlist.checked == true){
+  //     message = "Click to add country you wish to visit";
+  //   }
+  // }
+    this._div.innerHTML = (props ?
+        '<h4>' + props.NAME + '</h4>' 
+        : 'Hover over a Country');
+};
+
+info.addTo(myMap);
+
+
+//Bottom legend for map
+var legend = L.control({position: 'bottomright'});
+legend.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'info legend');
+    div.innerHTML +=
+        '<i style="background:' + 'blue' + '"  ></i> ' + 'Visited Countries' + '<br>' ;
+    div.innerHTML +=
+        '<i style="background:' + 'orange' + '"  ></i> ' + 'Wishlist' + '<br>' ;
+
+
+
+    return div;
+};
+
+legend.addTo(myMap);

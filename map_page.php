@@ -59,8 +59,8 @@
         <div class="row">
           <button type="button" onclick="addCountry();">Add Country</button>
           <button type="button" onclick="removeCountry();">Remove Country</button>
-          <span>Wishlist</span>
-          <input type="checkbox" id="wishlist">
+            <span>Wishlist</span>
+            <input type="checkbox" id="wishlist">
           <form method="POST" id="form">
             <input type="submit" value="Save Changes in DB"><br>
           </form>
@@ -88,11 +88,6 @@
         }
 
       </script>
-
-
-
-
-
 
 
 
