@@ -33,15 +33,17 @@
 
 
         <?php include 'page_components/navigation_panel.php'; ?>
+
+
         <script>
           var countries = <?= json_encode(getCountries()); ?>;
           // var visited_countries = countries[0];
+          var wishlist_countries = countries[1];
           countries = countries[0];
-          //var wishlist_countries = countries[1];
+
           //console.log(visited_countries);
           //console.log(wishlist_countries);
         </script>
-
 
         <h1>Select Countries you have visited</h1>
 
@@ -50,16 +52,44 @@
         </div>
 
         <div class="row">
-          <p>Click on a country on the map, to add or remove it, or use the text field below</p>
+          <p>Click on a country on the map to add/remove it, or use the text field below</p>
           <input type="text" placeholder="Country Name" id="countryInput">
           <span id="feedback"></span>
         </div>
         <div class="row">
           <button type="button" onclick="addCountry();">Add Country</button>
           <button type="button" onclick="removeCountry();">Remove Country</button>
-          <button type="button" onclick="">Save Changes in DB</button>
+          <span>Wishlist</span>
+          <input type="checkbox" id="wishlist">
+          <form method="POST" id="form">
+            <input type="submit" value="Save Changes in DB"><br>
+          </form>
+        </div>
 
-        </div class="row">
+        <!-- This script creates inputs for each country on the countries array
+        for the form submission, so it can be stored in the database
+        when user presses the submit button "save changes in DB" -->
+        <script>
+        for(var i = 0; i < countries.length; i++){
+          var input = document.createElement("input");
+          input.type = "hidden";
+          input.name = "visited_countries[]";
+          input.value = countries[i];
+          input.id = countries[i];
+          document.getElementById("form").appendChild(input);
+        }
+        for(var i = 0; i < wishlist_countries.length; i++){
+          var input = document.createElement("input");
+          input.type = "hidden";
+          input.name = "wishlist_countries[]";
+          input.value = wishlist_countries[i];
+          input.id = wishlist_countries[i];
+          document.getElementById("form").appendChild(input);
+        }
+
+      </script>
+
+
 
 
 

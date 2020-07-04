@@ -1,6 +1,6 @@
 
 //Setting up map
-var myMap = L.map('mapid').setView([51.505, -0.09], 3);
+var myMap = L.map('mapid').setView([51.505, -0.09], 1.5);
 
 
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -26,11 +26,42 @@ function countryClicked(e){
   var feature = e.target.feature;
   var name = feature.properties.NAME;
   var country_index = countryStored(name);
+  var wishlist_country_index = wishCountryStored(name);
 
   if(country_index){
     countries.splice(country_index-1,1);
+    //remove input with name of country (DB purposes)
+    document.getElementById(name).remove();
+
+  }else if(wishlist_country_index){
+    wishlist_countries.splice(wishlist_country_index-1,1);
+    //remove input with name of country (DB purposes)
+    document.getElementById(name).remove();
+
   }else{
-    countries.push(name);
+    //if wishlist checkbox is checked, then store country in the wishlist country
+    var wishlist = document.getElementById("wishlist");
+    if (wishlist.checked == true){
+      wishlist_countries.push(name);
+      //add form input with name of country that was added (DB purposes)
+      var input = document.createElement("input");
+      input.type = "hidden";
+      input.name = "wishlist_countries[]";
+      input.id = name;
+      input.value = name;
+      document.getElementById("form").appendChild(input);
+
+    }else{
+      countries.push(name);
+      //add form input with name of country that was added (DB purposes)
+      var input = document.createElement("input");
+      input.type = "hidden";
+      input.name = "visited_countries[]";
+      input.id = name;
+      input.value = name;
+      document.getElementById("form").appendChild(input);
+    }
+
   }
 
 }
@@ -46,7 +77,17 @@ function countryStored(country_name){
   return false;
 }
 
+function wishCountryStored(country_name){
+  for(var i = 0; i < wishlist_countries.length; i++){
+    if (wishlist_countries[i] === country_name){
+      //have to add 1 to the index, so index 0 does not evaluate to false
+      return i+1;
+    }
+  }
+  return false;
+}
 
+//Manual input to add country to array
 function addCountry(){
   var input = document.getElementById("countryInput").value;
   var form_input = format(input);
@@ -66,7 +107,7 @@ function addCountry(){
   }
   document.getElementById("feedback").innerHTML = feedback;
 }
-
+//Manual input to remove country from array
 function removeCountry(){
   var input = document.getElementById("countryInput").value;
   var form_input = format(input);
@@ -114,7 +155,16 @@ function style(feature) {
       dashArray: '',
       fillOpacity: 0.5
     }
-  }else{
+  }else if(wishCountryStored(feature.properties.NAME)){
+    return{
+      fillColor: "orange",
+      weight: 1,
+      color: 'black',
+      dashArray: '',
+      fillOpacity: 0.5
+    }
+  }
+  else{
     return {
       fillColor: "white",
       weight: 1,
