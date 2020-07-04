@@ -1,6 +1,7 @@
 
 var vehicles = [];
 var counter = -50;
+var explode;
 
 
 
@@ -11,6 +12,8 @@ function preload(){
 function setup(){
   var myCanvas = createCanvas(950,600);
   myCanvas.parent("canvasContainer");
+
+  explode = false;
 
   textW = 50;
   textH = height/2+70;
@@ -29,12 +32,26 @@ function setup(){
 function draw(){
   background(51);
 
-  for(var i = 0; i < vehicles.length; i++){
-    var v = vehicles[i];
-    v.behaviours();
-    v.update();
-    v.show();
+  if(explode){
+    for(var i = 0; i < vehicles.length; i++){
+      var v = vehicles[i];
+      v.explode();
+      v.behaviours();
+      v.update();
+      v.show();
+    }
+    explode = false;
+  }else{
+    for(var i = 0; i < vehicles.length; i++){
+      var v = vehicles[i];
+      v.behaviours();
+      v.update();
+      v.show();
+
+    }
   }
+
+
 
   counter ++;
 
@@ -43,39 +60,51 @@ function draw(){
   switch(counter){
     case increment:
       changeText("the other");
+      explode = true;
       break;
     case increment * 5:
       changeText("kids");
+      explode = true;
       break;
     case increment * 10:
       changeText("with the");
+      explode = true;
       break;
     case increment * 17:
       changeText("pumped");
+      explode = true;
       break;
     case increment * 19:
       changeText("up");
+      explode = true;
       break;
     case increment * 22:
       changeText("kicks");
+      explode = true;
       break;
     case increment * 25:
       changeText("You");
+      explode = true;
       break;
     case increment * 27:
       changeText("Better");
+      explode = true;
       break;
     case increment * 30:
       changeText("Run");
+      explode = true;
       break;
     case increment * 35:
       changeText("better run");
+      explode = true;
       break;
     case increment * 40:
       changeText("outrun");
+      explode = true;
       break;
     case increment * 45:
     changeText("my gun");
+    explode = true;
     break;
     // case increment * 4:
     // changeText("How");

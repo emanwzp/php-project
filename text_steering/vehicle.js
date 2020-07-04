@@ -68,8 +68,13 @@ function Vehicle(posX, posY, targetX, targetY){
       return createVector();
     }
 
-
   }
+
+    Vehicle.prototype.explode = function(){
+      var force = p5.Vector.random2D();
+      force.setMag(20);
+      this.vel.add(force);
+    }
 
 
 
